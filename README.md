@@ -54,6 +54,6 @@ Requires Node.js. No `npm install` step — nothing to install.
 
 ## Not affiliated with Postman
 
-This is an unofficial community wrapper for personal readability. All release
-content is the property of Postman, Inc. If Postman publishes an official
-enterprise release-notes page, use that instead.
+This is an open source project that's been created by a member of the
+community. Please refer to <https://www.postman.com/release-notes/> for any
+official release notes. All release content is the property of Postman, Inc.
