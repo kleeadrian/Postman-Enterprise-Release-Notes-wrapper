@@ -1,5 +1,8 @@
 (function () {
-  const NOTES_URL = "/api/notes";
+  // On localhost, use the Node proxy for live data.
+  // Everywhere else (GitHub Pages, etc.), use the static snapshot refreshed by CI.
+  const isLocal = /^(localhost|127\.0\.0\.1|\[?::1\]?)$/.test(location.hostname);
+  const NOTES_URL = isLocal ? "/api/notes" : "./notes.json";
   const state = { notes: [], selected: null };
 
   const el = {

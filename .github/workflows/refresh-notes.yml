@@ -1,0 +1,34 @@
+name: Refresh release notes
+
+on:
+  schedule:
+    - cron: "0 */6 * * *" # every 6 hours
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch latest notes
+        run: |
+          curl -fsSL "https://dl.pstmn.io/api/version/notes?channel=enterprise" \
+            -o notes.json
+          # Validate JSON
+          python3 -c "import json,sys; json.load(open('notes.json'))"
+
+      - name: Commit changes if any
+        run: |
+          if git diff --quiet notes.json; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add notes.json
+          git commit -m "chore: refresh release notes"
+          git push
